@@ -5,6 +5,7 @@ namespace Mangoweb\Tester\DatabaseCreator\Bridges\NetteDI;
 use App\Model\DatabaseStrategyAccessor;
 use Mangoweb\Tester\DatabaseCreator\Bridges\NetteTester\DatabaseNameResolver;
 use Mangoweb\Tester\DatabaseCreator\DatabaseCreator;
+use Mangoweb\Tester\DatabaseCreator\Drivers\MySqlDatabaseDriver;
 use Mangoweb\Tester\DatabaseCreator\Drivers\PostgreSqlDatabaseDriver;
 use Mangoweb\Tester\DatabaseCreator\IDbal;
 use Mangoweb\Tester\DatabaseCreator\Mutex;
@@ -72,8 +73,11 @@ class DatabaseCreatorExtension extends CompilerExtension
 	{
 		$builder = $this->getContainerBuilder();
 		$def = $builder->addDefinition($this->prefix('databaseDriver'));
+
 		if ($driver === 'postgres') {
 			$def->setFactory(PostgreSqlDatabaseDriver::class);
+		} elseif ($driver === 'mysql') {
+			$def->setFactory(MySqlDatabaseDriver::class);
 		}
 	}
 
