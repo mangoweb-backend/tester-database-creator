@@ -2,8 +2,6 @@
 
 namespace Mangoweb\Tester\DatabaseCreator;
 
-use App\Model\DatabaseStrategyAccessor;
-
 
 class DatabaseCreator
 {
