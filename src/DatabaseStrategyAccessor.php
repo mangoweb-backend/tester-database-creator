@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace App\Model;
+namespace Mangoweb\Tester\DatabaseCreator;
 
 use Mangoweb\Tester\DatabaseCreator\Strategies\IDatabaseCreationStrategy;
 

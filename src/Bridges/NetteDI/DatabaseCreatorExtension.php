@@ -2,9 +2,9 @@
 
 namespace Mangoweb\Tester\DatabaseCreator\Bridges\NetteDI;
 
-use App\Model\DatabaseStrategyAccessor;
 use Mangoweb\Tester\DatabaseCreator\Bridges\NetteTester\DatabaseNameResolver;
 use Mangoweb\Tester\DatabaseCreator\DatabaseCreator;
+use Mangoweb\Tester\DatabaseCreator\DatabaseStrategyAccessor;
 use Mangoweb\Tester\DatabaseCreator\Drivers\MySqlDatabaseDriver;
 use Mangoweb\Tester\DatabaseCreator\Drivers\PostgreSqlDatabaseDriver;
 use Mangoweb\Tester\DatabaseCreator\IDbal;
