@@ -7,7 +7,9 @@ use Mangoweb\Tester\DatabaseCreator\DatabaseCreator;
 use Mangoweb\Tester\DatabaseCreator\DatabaseStrategyAccessor;
 use Mangoweb\Tester\DatabaseCreator\Drivers\MySqlDatabaseDriver;
 use Mangoweb\Tester\DatabaseCreator\Drivers\PostgreSqlDatabaseDriver;
+use Mangoweb\Tester\DatabaseCreator\IDatabaseNameResolver;
 use Mangoweb\Tester\DatabaseCreator\IDbal;
+use Mangoweb\Tester\DatabaseCreator\MigrationHashSuffixDatabaseNameResolver;
 use Mangoweb\Tester\DatabaseCreator\Mutex;
 use Mangoweb\Tester\DatabaseCreator\Strategies\ContinueOrResetDatabaseStrategy;
 use Mangoweb\Tester\DatabaseCreator\Strategies\ResetDatabaseStrategy;
@@ -18,11 +20,15 @@ use Nette\DI\CompilerExtension;
 class DatabaseCreatorExtension extends CompilerExtension
 {
 	public $defaults = [
-		'testDatabaseFormat' => DatabaseNameResolver::DEFAULT_FORMAT,
 		'dbal' => NULL,
 		'migrations' => NULL,
 		'driver' => NULL,
 		'strategy' => NULL,
+		'databaseName' => [
+			'format' => DatabaseNameResolver::DEFAULT_FORMAT,
+			'type' => 'tester',
+			'migrationHashSuffix' => FALSE,
+		],
 	];
 
 
@@ -37,9 +43,11 @@ class DatabaseCreatorExtension extends CompilerExtension
 
 		$builder = $this->getContainerBuilder();
 
-		$builder->addDefinition($this->prefix('databaseNameResolver'))
-			->setClass(DatabaseNameResolver::class)
-			->setArguments([$config['testDatabaseFormat']]);
+		if (isset($config['testDatabaseFormat'])) {
+			trigger_error('testDatabaseFormat is deprecated, use databaseName.format option instead', E_USER_DEPRECATED);
+			$config['databaseName']['format'] = $config['testDatabaseFormat'];
+		}
+
 		$builder->addDefinition($this->prefix('mutex'))
 			->setClass(Mutex::class)
 			->setArguments([$builder->expand('%tempDir%')]);
@@ -50,6 +58,7 @@ class DatabaseCreatorExtension extends CompilerExtension
 		$this->registerMigrations($config['migrations']);
 		$this->registerDriver($config['driver']);
 		$this->registerStrategy($config['strategy']);
+		$this->registerNameResolver($config['databaseName']);
 	}
 
 
@@ -100,6 +109,30 @@ class DatabaseCreatorExtension extends CompilerExtension
 			$def->setFactory(ContinueOrResetDatabaseStrategy::class);
 		} else {
 			$def->setFactory($strategy);
+		}
+	}
+
+
+	private function registerNameResolver(array $config): void
+	{
+		$builder = $this->getContainerBuilder();
+
+		$def = $builder->addDefinition($this->prefix('databaseNameResolver'));
+		$def->setClass(IDatabaseNameResolver::class);
+
+		if ($config['type'] === 'tester') {
+			$def->setFactory(DatabaseNameResolver::class)
+				->setArguments([$config['format']]);
+		} else {
+			$def->setFactory($config['type']);
+		}
+		if ($config['migrationHashSuffix'] ?? FALSE) {
+			$def->setAutowired(FALSE);
+			$builder->addDefinition($this->prefix('databaseNameResolverDecorator'))
+				->setClass(IDatabaseNameResolver::class)
+				->setFactory(MigrationHashSuffixDatabaseNameResolver::class, [
+					'nameResolver' => $def,
+				]);
 		}
 	}
 
