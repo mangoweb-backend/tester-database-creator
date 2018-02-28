@@ -9,6 +9,7 @@ use Mangoweb\Tester\DatabaseCreator\Drivers\MySqlDatabaseDriver;
 use Mangoweb\Tester\DatabaseCreator\Drivers\PostgreSqlDatabaseDriver;
 use Mangoweb\Tester\DatabaseCreator\IDbal;
 use Mangoweb\Tester\DatabaseCreator\Mutex;
+use Mangoweb\Tester\DatabaseCreator\Strategies\ContinueOrResetDatabaseStrategy;
 use Mangoweb\Tester\DatabaseCreator\Strategies\ResetDatabaseStrategy;
 use Mangoweb\Tester\DatabaseCreator\Strategies\TemplateDatabaseStrategy;
 use Nette\DI\CompilerExtension;
@@ -95,6 +96,8 @@ class DatabaseCreatorExtension extends CompilerExtension
 			$def->setFactory(TemplateDatabaseStrategy::class, [TemplateDatabaseStrategy::DEFAULT_FORMAT]);
 		} elseif ($strategy === 'reset') {
 			$def->setFactory(ResetDatabaseStrategy::class);
+		} elseif ($strategy === 'continueOrReset') {
+			$def->setFactory(ContinueOrResetDatabaseStrategy::class);
 		} else {
 			$def->setFactory($strategy);
 		}
