@@ -2,8 +2,8 @@
 
 namespace Mangoweb\Tester\DatabaseCreator\Bridges\Infrastructure;
 
+use Mangoweb\Tester\DatabaseCreator\Bridges\InfrastructureNextrasDbal\NextrasDbalHook;
 use Mangoweb\Tester\DatabaseCreator\Bridges\InfrastructureNextrasDbal\NextrasDbalServiceHelpers;
-use Mangoweb\Tester\Infrastructure\Bridges\NextrasDbal\NextrasDbalHook;
 use Mangoweb\Tester\Infrastructure\MangoTesterExtension;
 use Nette\DI\CompilerExtension;
 use Nextras\Dbal\IConnection;
