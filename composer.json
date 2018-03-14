@@ -9,6 +9,7 @@
 		"nextras/dbal": "@dev",
 		"nextras/orm": "@dev",
 		"nextras/migrations": "@dev",
+		"mangoweb/tester-infrastructure": "@dev",
 		"phpstan/phpstan-shim": "^0.9.2"
 	},
 	"suggest": {
