@@ -8,7 +8,8 @@
 		"nette/di": "~2.4",
 		"nextras/dbal": "@dev",
 		"nextras/orm": "@dev",
-		"nextras/migrations": "@dev"
+		"nextras/migrations": "@dev",
+		"phpstan/phpstan-shim": "^0.9.2"
 	},
 	"suggest": {
 		"nextras/dbal": "",
