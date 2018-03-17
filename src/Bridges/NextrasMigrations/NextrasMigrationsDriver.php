@@ -34,6 +34,15 @@ class NextrasMigrationsDriver implements IMigrationsDriver
 				throw $e;
 			}
 		});
+
+		foreach ($configuration->getGroups() as $group) {
+			$runner->addGroup($group);
+		}
+
+		foreach ($configuration->getExtensionHandlers() as $ext => $handler) {
+			$runner->addExtensionHandler($ext, $handler);
+		}
+
 		$this->migrationsRunner = $runner;
 		$this->configuration = $configuration;
 	}
@@ -41,14 +50,14 @@ class NextrasMigrationsDriver implements IMigrationsDriver
 
 	public function reset(): void
 	{
-		$this->migrationsRunner->run(Runner::MODE_RESET, $this->configuration);
+		$this->migrationsRunner->run(Runner::MODE_RESET);
 	}
 
 
 	public function continue(): void
 	{
 		try {
-			$this->migrationsRunner->run(Runner::MODE_CONTINUE, $this->configuration);
+			$this->migrationsRunner->run(Runner::MODE_CONTINUE);
 		} catch (LogicException $e) {
 			throw new CannotContinueMigrationException($e->getMessage(), 0, $e);
 		}
