@@ -6,6 +6,7 @@ use Mangoweb\Tester\DatabaseCreator\Bridges\InfrastructureNextrasDbal\NextrasDba
 use Mangoweb\Tester\DatabaseCreator\Bridges\InfrastructureNextrasDbal\NextrasDbalServiceHelpers;
 use Mangoweb\Tester\Infrastructure\MangoTesterExtension;
 use Nette\DI\CompilerExtension;
+use Nette\DI\Definitions\ServiceDefinition;
 use Nextras\Dbal\IConnection;
 
 
@@ -48,6 +49,7 @@ class DatabaseCreatorInfrastructureExtension extends CompilerExtension
 		$serviceName = $builder->getByType(IConnection::class);
 		$def = $serviceName ? $builder->getDefinition($serviceName) : null;
 		if ($def && !isset($def->getTags()[MangoTesterExtension::TAG_REQUIRE])) {
+			assert($def instanceof ServiceDefinition);
 			NextrasDbalServiceHelpers::modifyConnectionDefinition($def);
 		}
 	}

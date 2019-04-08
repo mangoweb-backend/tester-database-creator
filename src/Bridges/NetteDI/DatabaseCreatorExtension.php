@@ -20,14 +20,14 @@ use Nette\DI\CompilerExtension;
 class DatabaseCreatorExtension extends CompilerExtension
 {
 	public $defaults = [
-		'dbal' => NULL,
-		'migrations' => NULL,
-		'driver' => NULL,
-		'strategy' => NULL,
+		'dbal' => null,
+		'migrations' => null,
+		'driver' => null,
+		'strategy' => null,
 		'databaseName' => [
 			'format' => DatabaseNameResolver::DEFAULT_FORMAT,
 			'type' => 'tester',
-			'migrationHashSuffix' => FALSE,
+			'migrationHashSuffix' => false,
 		],
 	];
 
@@ -36,10 +36,10 @@ class DatabaseCreatorExtension extends CompilerExtension
 	{
 		$config = $this->validateConfig($this->defaults);
 
-		assert($config['dbal'] !== NULL);
-		assert($config['migrations'] !== NULL);
-		assert($config['driver'] !== NULL);
-		assert($config['strategy'] !== NULL);
+		assert($config['dbal'] !== null);
+		assert($config['migrations'] !== null);
+		assert($config['driver'] !== null);
+		assert($config['strategy'] !== null);
 
 		$builder = $this->getContainerBuilder();
 
@@ -50,7 +50,7 @@ class DatabaseCreatorExtension extends CompilerExtension
 
 		$builder->addDefinition($this->prefix('mutex'))
 			->setClass(Mutex::class)
-			->setArguments([$builder->expand('%tempDir%')]);
+			->setArguments([$builder->parameters['tempDir']]);
 		$builder->addDefinition($this->prefix('databaseCreator'))
 			->setClass(DatabaseCreator::class);
 
@@ -96,9 +96,9 @@ class DatabaseCreatorExtension extends CompilerExtension
 	{
 		$builder = $this->getContainerBuilder();
 
-		$builder->addDefinition($this->prefix('databaseStrategyAccessor'))
+		$builder->addAccessorDefinition($this->prefix('databaseStrategyAccessor'))
 			->setImplement(DatabaseStrategyAccessor::class)
-			->setFactory($this->prefix('@strategy'));
+			->setReference($this->prefix('@strategy'));
 
 		$def = $builder->addDefinition($this->prefix('strategy'));
 		if ($strategy === 'template') {
@@ -126,8 +126,8 @@ class DatabaseCreatorExtension extends CompilerExtension
 		} else {
 			$def->setFactory($config['type']);
 		}
-		if ($config['migrationHashSuffix'] ?? FALSE) {
-			$def->setAutowired(FALSE);
+		if ($config['migrationHashSuffix'] ?? false) {
+			$def->setAutowired(false);
 			$builder->addDefinition($this->prefix('databaseNameResolverDecorator'))
 				->setClass(IDatabaseNameResolver::class)
 				->setFactory(MigrationHashSuffixDatabaseNameResolver::class, [

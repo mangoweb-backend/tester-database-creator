@@ -3,8 +3,8 @@
 namespace Mangoweb\Tester\DatabaseCreator\Bridges\InfrastructureNextrasDbal;
 
 use Mangoweb\Tester\DatabaseCreator\DatabaseCreator;
-use Nette\DI\ServiceDefinition;
-use Nette\DI\Statement;
+use Nette\DI\Definitions\ServiceDefinition;
+use Nette\DI\Definitions\Statement;
 use Nette\StaticClass;
 
 class NextrasDbalServiceHelpers

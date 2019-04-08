@@ -22,10 +22,9 @@ class DatabaseCreatorHook extends AppContainerHook
 
 	public function onCompile(ContainerBuilder $builder): void
 	{
-		$builder->addDefinition('databaseCreator')
-			->setClass(DatabaseCreator::class)
-			->setDynamic();
-		$builder->prepareClassList();
+		$builder->addImportedDefinition('databaseCreator')
+			->setType(DatabaseCreator::class);
+		$builder->resolve();
 	}
 
 

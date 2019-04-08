@@ -7,7 +7,7 @@ class DatabaseCreator
 {
 
 	/** @var bool */
-	private $created = FALSE;
+	private $created = false;
 
 	/** @var IDatabaseNameResolver */
 	private $databaseNameResolver;
@@ -35,7 +35,7 @@ class DatabaseCreator
 			return;
 		}
 		$this->databaseStrategyAccessor->get()->prepareDatabase($this->databaseNameResolver->getDatabaseName());
-		$this->created = TRUE;
+		$this->created = true;
 	}
 
 }
