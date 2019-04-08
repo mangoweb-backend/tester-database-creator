@@ -22,10 +22,19 @@ class DatabaseCreatorHook extends AppContainerHook
 
 	public function onCompile(ContainerBuilder $builder): void
 	{
-		$builder->addDefinition('databaseCreator')
-			->setClass(DatabaseCreator::class)
-			->setDynamic();
-		$builder->prepareClassList();
+		if (class_exists(\Nette\DI\Definitions\ImportedDefinition::class)) {
+			$builder->addImportedDefinition('databaseCreator')
+				->setClass(DatabaseCreator::class);
+		} else {
+			$builder->addDefinition('databaseCreator')
+				->setClass(DatabaseCreator::class)
+				->setDynamic(true);
+		}
+		if (method_exists($builder, 'resolve')) {
+			$builder->resolve();
+		} else {
+			$builder->prepareClassList();
+		}
 	}
 
 

@@ -5,7 +5,7 @@
 		"php": "~7.1"
 	},
 	"require-dev": {
-		"nette/di": "~2.4",
+		"nette/di": "~2.4 || ~3.0",
 		"nextras/dbal": "@dev",
 		"nextras/orm": "@dev",
 		"nextras/migrations": "@dev",
