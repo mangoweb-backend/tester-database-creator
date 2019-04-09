@@ -1,0 +1,7 @@
+extensions:
+	transactional: Mangoweb\NextrasTransactional\TransactionalExtension
+
+mango.databaseCreator:
+	strategy: continueOrReset
+	databaseName:
+		migrationHashSuffix: true

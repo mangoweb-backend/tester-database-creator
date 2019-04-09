@@ -1,0 +1,28 @@
+extensions:
+	mango.databaseCreator: Mangoweb\Tester\DatabaseCreator\Bridges\NetteDI\DatabaseCreatorExtension
+	mango.databaseCreatorInfrastructure: Mangoweb\Tester\DatabaseCreator\Bridges\Infrastructure\DatabaseCreatorInfrastructureExtension
+	databaseCreatorDbal: Nextras\Dbal\Bridges\NetteDI\DbalExtension
+	migrations: Nextras\Migrations\Bridges\NetteDI\MigrationsExtension
+
+mango.tester:
+	require:
+		- Nextras\Dbal\IConnection
+
+databaseCreatorDbal:
+	driver: mysqli
+	autowired: false
+
+mango.databaseCreator:
+	driver: mysql
+	dbal: Mangoweb\Tester\DatabaseCreator\Bridges\NextrasDbal\NextrasDbalAdapter(@databaseCreatorDbal.connection)
+	migrations: Mangoweb\Tester\DatabaseCreator\Bridges\NextrasMigrations\NextrasMigrationsDriver
+	strategy: reset
+
+migrations:
+	dir: %appDir%/../migrations
+	driver: mysql
+	dbal: nextras
+
+services:
+	migrations.dbal:
+		arguments: [connection: @databaseCreatorDbal.connection]
