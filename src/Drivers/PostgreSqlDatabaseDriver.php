@@ -4,26 +4,22 @@ namespace Mangoweb\Tester\DatabaseCreator\Drivers;
 
 use Mangoweb\Tester\DatabaseCreator\IDbal;
 
-
 class PostgreSqlDatabaseDriver implements IDatabaseDriver, ITemplateDatabaseDriver
 {
 
 	/** @var IDbal */
 	private $dbal;
 
-
 	public function __construct(IDbal $dbal)
 	{
 		$this->dbal = $dbal;
 	}
-
 
 	public function getDatabaseName(): string
 	{
 		$result = $this->dbal->query('SELECT current_database();');
 		return reset($result[0]);
 	}
-
 
 	public function hasTemplateDatabase(string $name): bool
 	{
@@ -33,12 +29,10 @@ class PostgreSqlDatabaseDriver implements IDatabaseDriver, ITemplateDatabaseDriv
 		return $statement[0]['count'] === 1;
 	}
 
-
 	public function createTemplateDatabase(string $name): void
 	{
 		$this->dbal->query(sprintf('CREATE DATABASE %s WITH TEMPLATE template1', $this->dbal->escapeIdentifier($name)));
 	}
-
 
 	public function createDatabaseFromTemplate(string $templateDb, string $dbName): void
 	{
@@ -48,7 +42,6 @@ class PostgreSqlDatabaseDriver implements IDatabaseDriver, ITemplateDatabaseDriv
 		$this->dbal->query(sprintf('DROP DATABASE IF EXISTS %s', $dbName));
 		$this->dbal->query(sprintf('CREATE DATABASE %s WITH TEMPLATE %s', $dbName, $templateDb));
 	}
-
 
 	public function connectToDatabase(string $name): void
 	{

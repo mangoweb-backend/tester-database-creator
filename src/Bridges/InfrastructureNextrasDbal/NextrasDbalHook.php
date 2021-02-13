@@ -7,9 +7,9 @@ use Nette\DI\ContainerBuilder;
 use Nette\DI\Definitions\ServiceDefinition;
 use Nextras\Dbal\Connection;
 
-
 class NextrasDbalHook extends AppContainerHook
 {
+
 	public function onCompile(ContainerBuilder $builder): void
 	{
 		$def = $builder->getDefinitionByType(Connection::class);

@@ -2,22 +2,19 @@
 
 namespace Mangoweb\Tester\DatabaseCreator;
 
-
 class Mutex
 {
 
 	/** @var string */
 	private $dir;
 
-	/** @var array (name => handle) */
+	/** @var array<mixed> (name => handle) */
 	private $locks;
-
 
 	public function __construct(string $dir)
 	{
 		$this->dir = $dir;
 	}
-
 
 	/**
 	 * @return mixed value returned by callback
@@ -33,7 +30,6 @@ class Mutex
 		}
 	}
 
-
 	protected function lock(string $key): void
 	{
 		$key = $this->getKey($key);
@@ -46,7 +42,6 @@ class Mutex
 		flock($this->locks[$key], LOCK_EX);
 	}
 
-
 	protected function unlock(string $key): void
 	{
 		$key = $this->getKey($key);
@@ -58,7 +53,6 @@ class Mutex
 		fclose($this->locks[$key]);
 		unset($this->locks[$key]);
 	}
-
 
 	protected function getKey(string $key): string
 	{

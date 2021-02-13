@@ -16,9 +16,10 @@ use Mangoweb\Tester\DatabaseCreator\Strategies\ResetDatabaseStrategy;
 use Mangoweb\Tester\DatabaseCreator\Strategies\TemplateDatabaseStrategy;
 use Nette\DI\CompilerExtension;
 
-
 class DatabaseCreatorExtension extends CompilerExtension
 {
+
+	/** @var array<mixed> */
 	public $defaults = [
 		'dbal' => null,
 		'migrations' => null,
@@ -30,7 +31,6 @@ class DatabaseCreatorExtension extends CompilerExtension
 			'migrationHashSuffix' => false,
 		],
 	];
-
 
 	public function loadConfiguration()
 	{
@@ -61,16 +61,20 @@ class DatabaseCreatorExtension extends CompilerExtension
 		$this->registerNameResolver($config['databaseName']);
 	}
 
-
+	/**
+	 * @param mixed $dbal
+	 */
 	private function registerDbal($dbal): void
 	{
 		$builder = $this->getContainerBuilder();
 		$def = $builder->addDefinition($this->prefix('dbal'));
-		$def->setClass(IDbal::class);
+		$def->setType(IDbal::class);
 		$def->setFactory($dbal);
 	}
 
-
+	/**
+	 * @param mixed $migrations
+	 */
 	private function registerMigrations($migrations): void
 	{
 		$builder = $this->getContainerBuilder();
@@ -78,7 +82,9 @@ class DatabaseCreatorExtension extends CompilerExtension
 		$def->setFactory($migrations);
 	}
 
-
+	/**
+	 * @param mixed $driver
+	 */
 	private function registerDriver($driver): void
 	{
 		$builder = $this->getContainerBuilder();
@@ -91,8 +97,7 @@ class DatabaseCreatorExtension extends CompilerExtension
 		}
 	}
 
-
-	private function registerStrategy($strategy): void
+	private function registerStrategy(string $strategy): void
 	{
 		$builder = $this->getContainerBuilder();
 
@@ -112,7 +117,9 @@ class DatabaseCreatorExtension extends CompilerExtension
 		}
 	}
 
-
+	/**
+	 * @param array<mixed> $config
+	 */
 	private function registerNameResolver(array $config): void
 	{
 		$builder = $this->getContainerBuilder();

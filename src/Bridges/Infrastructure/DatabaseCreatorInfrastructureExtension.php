@@ -9,19 +9,20 @@ use Nette\DI\CompilerExtension;
 use Nette\DI\Definitions\ServiceDefinition;
 use Nextras\Dbal\IConnection;
 
-
 class DatabaseCreatorInfrastructureExtension extends CompilerExtension
 {
+
+	/**
+	 * @var array<mixed>
+	 */
 	public $defaults = [
 		'nextrasDbal' => false,
 	];
-
 
 	public function __construct()
 	{
 		$this->defaults['nextrasDbal'] = interface_exists(IConnection::class);
 	}
-
 
 	public function loadConfiguration()
 	{
@@ -32,12 +33,10 @@ class DatabaseCreatorInfrastructureExtension extends CompilerExtension
 			->setClass(DatabaseCreatorHook::class)
 			->addTag(MangoTesterExtension::TAG_HOOK);
 
-
 		if ($config['nextrasDbal']) {
 			$this->setupNextrasDbal();
 		}
 	}
-
 
 	protected function setupNextrasDbal(): void
 	{

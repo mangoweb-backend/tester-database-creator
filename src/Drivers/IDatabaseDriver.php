@@ -2,7 +2,6 @@
 
 namespace Mangoweb\Tester\DatabaseCreator\Drivers;
 
-
 interface IDatabaseDriver
 {
 

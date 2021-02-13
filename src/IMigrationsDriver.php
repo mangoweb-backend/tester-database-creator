@@ -7,12 +7,10 @@ interface IMigrationsDriver
 
 	public function getMigrationsHash(): string;
 
-
 	/**
 	 * @throws CannotContinueMigrationException
 	 */
 	public function continue(): void;
-
 
 	public function reset(): void;
 

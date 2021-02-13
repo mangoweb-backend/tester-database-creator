@@ -7,18 +7,16 @@ use Mangoweb\Tester\Infrastructure\Container\AppContainerHook;
 use Nette\DI\Container;
 use Nette\DI\ContainerBuilder;
 
-
 class DatabaseCreatorHook extends AppContainerHook
 {
+
 	/** @var DatabaseCreator */
 	private $databaseCreator;
-
 
 	public function __construct(DatabaseCreator $databaseCreator)
 	{
 		$this->databaseCreator = $databaseCreator;
 	}
-
 
 	public function onCompile(ContainerBuilder $builder): void
 	{
@@ -26,7 +24,6 @@ class DatabaseCreatorHook extends AppContainerHook
 			->setType(DatabaseCreator::class);
 		$builder->resolve();
 	}
-
 
 	public function onCreate(Container $applicationContainer): void
 	{
