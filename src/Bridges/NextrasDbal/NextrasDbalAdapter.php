@@ -7,18 +7,16 @@ use Mangoweb\Tester\DatabaseCreator\IDbal;
 use Nextras\Dbal\Connection;
 use Nextras\Dbal\Result\Row;
 
-
 class NextrasDbalAdapter implements IDbal
 {
+
 	/** @var Connection */
 	private $connection;
-
 
 	public function __construct(Connection $connection)
 	{
 		$this->connection = $connection;
 	}
-
 
 	public function query(string $sql): array
 	{
@@ -31,7 +29,6 @@ class NextrasDbalAdapter implements IDbal
 		);
 	}
 
-
 	public function exec(string $sql): int
 	{
 		$this->connection->connect();
@@ -39,19 +36,16 @@ class NextrasDbalAdapter implements IDbal
 		return $this->connection->getAffectedRows();
 	}
 
-
 	public function escapeString(string $value): string
 	{
 		$this->connection->connect();
 		return $this->connection->getDriver()->convertStringToSql($value);
 	}
 
-
 	public function escapeInt(int $value): string
 	{
 		return (string) $value;
 	}
-
 
 	public function escapeBool(bool $value): string
 	{
@@ -59,20 +53,17 @@ class NextrasDbalAdapter implements IDbal
 		return $this->connection->getDriver()->convertBoolToSql($value);
 	}
 
-
 	public function escapeDateTime(DateTime $value): string
 	{
 		$this->connection->connect();
 		return $this->connection->getDriver()->convertDateTimeToSql($value);
 	}
 
-
 	public function escapeIdentifier(string $value): string
 	{
 		$this->connection->connect();
 		return $this->connection->getDriver()->convertIdentifierToSql($value);
 	}
-
 
 	public function connectToDatabase(string $name): void
 	{

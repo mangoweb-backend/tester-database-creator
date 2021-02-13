@@ -6,9 +6,9 @@ use Mangoweb\Tester\DatabaseCreator\Drivers\ITemplateDatabaseDriver;
 use Mangoweb\Tester\DatabaseCreator\IMigrationsDriver;
 use Mangoweb\Tester\DatabaseCreator\Mutex;
 
-
 class TemplateDatabaseStrategy implements IDatabaseCreationStrategy
 {
+
 	public const DEFAULT_FORMAT = 'app_template_%s';
 
 	/** @var string */
@@ -23,7 +23,6 @@ class TemplateDatabaseStrategy implements IDatabaseCreationStrategy
 	/** @var Mutex */
 	private $mutex;
 
-
 	public function __construct(string $templateDbFormat, Mutex $mutex, ITemplateDatabaseDriver $driver, IMigrationsDriver $migrationsDriver)
 	{
 		$this->templateDbFormat = $templateDbFormat;
@@ -31,7 +30,6 @@ class TemplateDatabaseStrategy implements IDatabaseCreationStrategy
 		$this->migrationsDriver = $migrationsDriver;
 		$this->mutex = $mutex;
 	}
-
 
 	public function prepareDatabase(string $name): void
 	{

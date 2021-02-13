@@ -14,7 +14,6 @@ use Nextras\Migrations\IDriver;
 use Nextras\Migrations\LogicException;
 use Nextras\Migrations\Printers\DevNull;
 
-
 class NextrasMigrationsDriver implements IMigrationsDriver
 {
 
@@ -24,12 +23,10 @@ class NextrasMigrationsDriver implements IMigrationsDriver
 	/** @var IConfiguration */
 	private $configuration;
 
-
 	public function __construct(IDriver $driver, IConfiguration $configuration)
 	{
-		$runner = new Runner($driver, new class extends DevNull
-		{
-			public function printError(Exception $e)
+		$runner = new Runner($driver, new class extends DevNull {
+			public function printError(Exception $e): void
 			{
 				throw $e;
 			}
@@ -47,12 +44,10 @@ class NextrasMigrationsDriver implements IMigrationsDriver
 		$this->configuration = $configuration;
 	}
 
-
 	public function reset(): void
 	{
 		$this->migrationsRunner->run(Runner::MODE_RESET);
 	}
-
 
 	public function continue(): void
 	{
@@ -62,7 +57,6 @@ class NextrasMigrationsDriver implements IMigrationsDriver
 			throw new CannotContinueMigrationException($e->getMessage(), 0, $e);
 		}
 	}
-
 
 	public function getMigrationsHash(): string
 	{

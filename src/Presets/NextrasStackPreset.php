@@ -6,19 +6,18 @@ use Mangoweb\Tester\Infrastructure\InfrastructureConfigurator;
 
 class NextrasStackPreset
 {
-	public static function installMysql(InfrastructureConfigurator $configurator)
+
+	public static function installMysql(InfrastructureConfigurator $configurator): void
 	{
 		$configurator->addConfig(__DIR__ . '/nextras-mysql.neon');
 	}
 
-
-	public static function installPostgresql(InfrastructureConfigurator $configurator)
+	public static function installPostgresql(InfrastructureConfigurator $configurator): void
 	{
 		$configurator->addConfig(__DIR__ . '/nextras-postgresql.neon');
 	}
 
-
-	public static function installTransactional(InfrastructureConfigurator $configurator)
+	public static function installTransactional(InfrastructureConfigurator $configurator): void
 	{
 		$configurator->addConfig(__DIR__ . '/nextras-transactional.neon');
 	}

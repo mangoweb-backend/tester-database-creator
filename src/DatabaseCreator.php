@@ -2,7 +2,6 @@
 
 namespace Mangoweb\Tester\DatabaseCreator;
 
-
 class DatabaseCreator
 {
 
@@ -15,19 +14,16 @@ class DatabaseCreator
 	/** @var DatabaseStrategyAccessor */
 	private $databaseStrategyAccessor;
 
-
 	public function __construct(DatabaseStrategyAccessor $databaseStrategyAccessor, IDatabaseNameResolver $databaseNameResolver)
 	{
 		$this->databaseNameResolver = $databaseNameResolver;
 		$this->databaseStrategyAccessor = $databaseStrategyAccessor;
 	}
 
-
 	public function getDatabaseName(): string
 	{
 		return $this->databaseNameResolver->getDatabaseName();
 	}
-
 
 	public function createTestDatabase(): void
 	{

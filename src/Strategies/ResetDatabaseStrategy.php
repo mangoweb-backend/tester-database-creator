@@ -5,7 +5,6 @@ namespace Mangoweb\Tester\DatabaseCreator\Strategies;
 use Mangoweb\Tester\DatabaseCreator\Drivers\IDatabaseDriver;
 use Mangoweb\Tester\DatabaseCreator\IMigrationsDriver;
 
-
 class ResetDatabaseStrategy implements IDatabaseCreationStrategy
 {
 
@@ -15,13 +14,11 @@ class ResetDatabaseStrategy implements IDatabaseCreationStrategy
 	/** @var IMigrationsDriver */
 	private $migrationsDriver;
 
-
 	public function __construct(IDatabaseDriver $databaseDriver, IMigrationsDriver $migrationsDriver)
 	{
 		$this->databaseDriver = $databaseDriver;
 		$this->migrationsDriver = $migrationsDriver;
 	}
-
 
 	public function prepareDatabase(string $name): void
 	{

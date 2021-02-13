@@ -4,7 +4,6 @@ namespace Mangoweb\Tester\DatabaseCreator;
 
 use Mangoweb\Tester\DatabaseCreator\Strategies\IDatabaseCreationStrategy;
 
-
 interface DatabaseStrategyAccessor
 {
 

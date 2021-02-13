@@ -1,0 +1,5 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#Invalid type Nextras\\Migrations\\Exception to throw.#'
+			path: src/Bridges/NextrasMigrations/NextrasMigrationsDriver.php
